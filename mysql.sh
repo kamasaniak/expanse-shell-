@@ -42,7 +42,7 @@ VALIDATE $? "enabling mysql server"
 systemctl start mysqld
 VALIDATE $? "Starting mysql server"
 
-mysql -h mysql.rvbp.store -u root -pExpenseApp@1 -e 'show databases;
+mysql -h mysql.rvbp.store -u root -pExpenseApp@1 -e 'show databases';
 
 if [ $? -ne 0 ]
 
@@ -53,4 +53,3 @@ then
 else
    echo -e "Mysql root ppassword already setup ...$Y SKIPPING $N"
 fi
-
