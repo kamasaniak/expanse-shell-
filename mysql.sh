@@ -1,5 +1,4 @@
 #!/bin/bash
-
 USERID=$(id -u)
 R="\e[31m"
 G="\e[32m"
@@ -34,22 +33,21 @@ echo "Script started executing at: $TIMESTAMP" &>>$LOG_FILE_NAME
 CHECK_ROOT
 
 dnf install mysql-server -y &>>$LOG_FILE_NAME
-VALIDATE $? "installing mysql-server"
+VALIDATE $? "Installing MySQL Server"
 
 systemctl enable mysqld &>>$LOG_FILE_NAME
-VALIDATE $? "enabling mysql server"
+VALIDATE $? "Enabling MySQL Server"
 
 systemctl start mysqld &>>$LOG_FILE_NAME
-VALIDATE $? "Starting mysql server"
+VALIDATE $? "Starting MySQL Server"
 
-mysql -h mysql.rvbp.store -u root -pExpenseApp@1 -e 'show databases'; &>>$LOG_FILE_NAME
+mysql -h mysql.rvbp.store -u root -pExpenseApp@1 -e 'show databases;' &>>$LOG_FILE_NAME
 
 if [ $? -ne 0 ]
-
 then
-   echo"Mysql root password not setup"
-   mysql_secure_installation --set-root-pass ExpenseApp@1
-   VALIDATED $? "Setting root Password"
+    echo "MySQL Root password not setup" &>>$LOG_FILE_NAME
+    mysql_secure_installation --set-root-pass ExpenseApp@1
+    VALIDATE $? "Setting Root Password"
 else
-   echo -e "Mysql root ppassword already setup ...$Y SKIPPING $N"
+    echo -e "MySQL Root password already setup ... $Y SKIPPING $N"
 fi
